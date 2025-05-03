@@ -236,11 +236,6 @@ runs:
     #     /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $VERSION" build/darwin/Info.plist
     #     /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $VERSION" build/darwin/Info.plist
     #   shell: bash
-    - name: Add Linux perms
-      if: inputs.build == 'true' && runner.os  == 'Linux'
-      working-directory: ${{ inputs.app-working-directory }}
-      run: chmod +x bin/*
-      shell: bash
     # Package and Sign MacOS
     - name: Package App
       if: inputs.build == 'true'
@@ -249,6 +244,11 @@ runs:
         LDFLAGS: ${{inputs.build-ldflags}}
       working-directory: ${{ inputs.app-working-directory }}
       run: wails3 package
+      shell: bash
+    - name: Add Linux perms
+      if: inputs.build == 'true' && runner.os  == 'Linux'
+      working-directory: ${{ inputs.app-working-directory }}
+      run: chmod +x bin/*
       shell: bash
     - name: Import Code-Signing Certificates for macOS
       if: runner.os == 'macOS' && inputs.sign != 'false' && startsWith(github.ref, 'refs/tags/')
