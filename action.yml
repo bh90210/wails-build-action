@@ -220,7 +220,7 @@ runs:
     # install wails
     - name: Install Wails
       if: inputs.build == 'true' && inputs.wails-dev-build == 'false'
-      run: go install github.com/wailsapp/wails/v3/cmd/wails3@${{inputs.wails-version}}
+      run: go install github.com/bh90210/wails/v3/cmd/wails3@${{inputs.wails-version}}
       shell: bash
     - name: Install macOS Wails deps
       if: runner.os == 'macOS'
